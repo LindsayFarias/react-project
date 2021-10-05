@@ -5,7 +5,7 @@ const NavBar = (props) => {
     return (
         <Navbar bg="dark" expand="lg" variant="dark">
             <Container fluid>
-                <Navbar.Brand href="#">SDI 7's Drink Finder</Navbar.Brand>
+                <Navbar.Brand>SDI 7's Drink Finder</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav
@@ -13,8 +13,8 @@ const NavBar = (props) => {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link onClick={() => { props.app.setState({ name: "" }) }} >Home</Nav.Link>
-                        <Button onClick={() => { props.randomDrinkFunc() }} variant="outline-success">Find Random Drink</Button>
+                        <Button className="mx-1" onClick={() => { props.app.setState({ name: "", searchError: false }) }} variant="outline-success" >Home</Button>
+                        <Button className="mx-1" onClick={() => { props.randomDrinkFunc() }} variant="outline-success">Find Random Drink</Button>
 
                     </Nav>
                     <Form className="d-flex">
