@@ -3,6 +3,7 @@ import React from 'react';
 import Drink from './Drink';
 import NavBar from './NavBar';
 import HomePage from './HomePage'
+import ErrorPage from './Error'
 //const url = "www.thecocktaildb.com/api/json/v1/1/"
 
 //change to "classical" aka use class
@@ -17,7 +18,9 @@ class App extends React.Component {
       name: "",
       ingredients: [],
       instructions: "",
-      image: ""
+      image: "",
+      searchError: false,
+      searchPhrase: ""
     }
   }
 
@@ -27,19 +30,37 @@ class App extends React.Component {
     this.getDrink(drinkSearch.value)
   }
 
-  async getDrink(drinkName) {
-    let result = {}
+  async getDrinkJson(drinkName) {
+    let result
+
     if (!drinkName) {
       result = await fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php")
     } else {
       result = await fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drinkName)
     }
 
-    console.log("Result", result)
+    //console.log("Result", result)
     let json = await result.json()
-    console.log("JSON", json.drinks[0].strDrink)
+    //console.log("JSON", json.drinks[0].strDrink)
 
-    let drink = json.drinks[0];
+    if (!json.drinks) {
+      this.setState({ searchError: true, searchPhrase: drinkName })
+      return
+    } else {
+      this.setState({ searchError: false })
+    }
+
+    return json.drinks[0];
+  }
+
+  async getDrink(drinkName) {
+
+    let drink = await this.getDrinkJson(drinkName)
+
+    if (!drink)
+      return
+
+    //console.log("Drink", drink)
 
     let name = drink.strDrink
     let ingredients = []
@@ -55,14 +76,17 @@ class App extends React.Component {
       }
     }
 
-    console.log(ingredients)
+    //console.log(ingredients)
 
     this.setState({ name: name, ingredients: ingredients, instructions: instructions, image: image })
   }
 
   render() {
     let result;
-    if (this.state.name === "") {
+    if (this.state.searchError) {
+      // We have a search error, show the error page
+      result = <ErrorPage searchPhrase={this.state.searchPhrase} searchFunc={this.search} />
+    } else if (this.state.name === "") {
       result = <HomePage />
     } else {
       result = <Drink name={this.state.name} ingredients={this.state.ingredients} instructions={this.state.instructions} image={this.state.image} />
