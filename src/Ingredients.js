@@ -1,51 +1,28 @@
-import React from "react"
-import Drink from "./Drink.js"
+import React, { useState } from "react"
+import { ListGroup, ListGroupItem, Collapse } from "react-bootstrap"
+
 
 const Ingredients = (props) => {
+    const [open, setOpen] = useState(false);
     if (!props.ingredients) return <> </>
     else
         return (
             <div className="ingredient-list">
-                <p>Ingredients</p>
-                <ul>
+                <h4 onClick={() => setOpen(!open)}
+                    aria-controls="example-collapse-text"
+                    aria-expanded={open}>Ingredients</h4>
+                {/*      <Collapse in={open}> */}
+                <ListGroup className="list-group-flush drink-card" >
                     {props.ingredients.map(ingredient => (
-                        <li>
-                            {ingredient.ingredient + `-` + ingredient.measurement}
-                        </li>
+                        <ListGroupItem className="drink-card">
+                            {`${!ingredient.measurement ? "" : ingredient.measurement + " of"} ${ingredient.ingredient}`}
+                        </ListGroupItem>
                     ))}
-                </ul>
+                </ListGroup>
+                {/* </Collapse> */}
             </div>
         );
 }
 
 export default Ingredients
 
-
-
-
-// const ComedianList = (props) => {
-//     return (
-//         <ul>
-//             {props.people.map(person => (
-//                 <li>
-//                     <Person key={person.id} name={person.name} /> <button onClick={() => props.removeFavoriteComedian(person.id)}>DELETE</button>
-//                 </li>
-//             ))}
-//         </ul>
-//     );
-// }
-
-// import React from 'react'
-// import ComedianList from './ComedianList'
-
-// const App = () => {
-//     const favoriteComedians = [
-//         { id: "dda4f542-8f47-4e77-83e7-038a5640d38d", name: "Dave Chappelle" },
-//         { id: "1dd1e83b-17cc-4f21-8f23-68f804e1469d", name: "Louis C.K." },
-//         { id: "de70eac1-8cfb-4930-8101-ac8c187cb134", name: "George Lopez" }
-//     ]
-//     return <ComedianList people={favoriteComedians} />
-
-// }
-
-// export default App
