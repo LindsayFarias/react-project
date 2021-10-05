@@ -1,6 +1,7 @@
 import './App.css';
 import React from 'react';
 import Drink from './Drink';
+import NavBar from './NavBar';
 
 //const url = "www.thecocktaildb.com/api/json/v1/1/"
 
@@ -11,12 +12,16 @@ class App extends React.Component {
     this.state = {}
   }
 
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <Drink />
+        <header>
+          <NavBar drink={this.setState.drink} />
         </header>
+        <main className="main-body">
+          <Drink />
+        </main>
       </div>
     );
   }
@@ -24,13 +29,13 @@ class App extends React.Component {
 
 export default App;
 
-// Starting with Create React App, make an app that includes: 
+// Starting with Create React App, make an app that includes:
 
-// An API Call in a a Classical component at the top level
-// Use fetch to make your API call
-// Use componentDidMount and setState properly in conjunction
-// At least 1 classical component (best practice - at the top level)
-// At least 3 functional components
+// An API Call in a a Classical component at the top level - DONE
+// Use fetch to make your API call - DONE
+// Use componentDidMount and setState properly in conjunction - DONE
+// At least 1 classical component (best practice - at the top level) - DONE
+// At least 3 functional components - 1/3
 // Some CSS styles for components
 // At least 2 event handlers
 // At least one form/field (somewhere a user types things or enters data)
