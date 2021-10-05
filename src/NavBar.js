@@ -18,13 +18,15 @@ const NavBar = (props) => {
 
                     </Nav>
                     <Form className="d-flex">
+                        <Button className="mx-1" onClick={() => { props.app.setState({ lang: "" }) }} variant="outline-success">EN</Button>
+                        <Button className="mx-1" onClick={() => { props.app.setState({ lang: "DE" }) }} variant="outline-warning">DE</Button>
+                        <Button className="mx-1" onClick={() => { props.app.setState({ lang: "IT" }) }} variant="outline-primary">IT</Button>
                         <FormControl
                             type="search"
                             placeholder="Search by Drink Name"
                             className="me-2"
                             aria-label="Search"
                             id="drinkSearch"
-                            ref={props.searchRef}
                             onChange={element => props.app.setState({ searchBoxValue: element.target.value })}
                         />
                         <Button onClick={() => { props.searchFunc() }} variant="outline-success">Search</Button>

@@ -21,7 +21,8 @@ class App extends React.Component {
       image: "",
       searchError: false,
       searchPhrase: "",
-      searchBoxValue: ""
+      searchBoxValue: "",
+      lang: ""
     }
   }
 
@@ -67,7 +68,25 @@ class App extends React.Component {
 
     let name = drink.strDrink
     let ingredients = []
-    let instructions = drink.strInstructions
+
+
+    let instructions
+
+    switch (this.state.lang) {
+      case "": {
+        instructions = drink.strInstructions
+        break
+      }
+      case "DE": {
+        instructions = drink.strInstructionsDE
+        break
+      }
+      case "IT": {
+        instructions = drink.strInstructionsIT
+        break
+      }
+    }
+
     let image = drink.strDrinkThumb
 
     for (let i = 1; i < 15; i++) {
@@ -92,7 +111,7 @@ class App extends React.Component {
     } else if (this.state.name === "") {
       result = <HomePage />
     } else {
-      result = <Drink name={this.state.name} ingredients={this.state.ingredients} instructions={this.state.instructions} image={this.state.image} />
+      result = <Drink name={this.state.name} ingredients={this.state.ingredients} instructions={this.state.instructions} image={this.state.image} lang={this.state.lang} />
     }
     return (
       <div className="App">
