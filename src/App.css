@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+.drink-card {
+  background-color: rgb(172, 164, 164);
+}
