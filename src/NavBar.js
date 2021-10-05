@@ -13,7 +13,7 @@ const NavBar = (props) => {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link href="#action1">Home</Nav.Link>
+                        <Nav.Link onClick={() => { props.app.setState({ name: "" }) }} >Home</Nav.Link>
                         <Button onClick={() => { props.randomDrinkFunc() }} variant="outline-success">Find Random Drink</Button>
 
                     </Nav>

@@ -2,7 +2,7 @@ import './App.css';
 import React from 'react';
 import Drink from './Drink';
 import NavBar from './NavBar';
-
+import HomePage from './HomePage'
 //const url = "www.thecocktaildb.com/api/json/v1/1/"
 
 //change to "classical" aka use class
@@ -19,10 +19,6 @@ class App extends React.Component {
       instructions: "",
       image: ""
     }
-  }
-
-  async componentDidMount() {
-    this.getDrink()
   }
 
   search() {
@@ -65,13 +61,19 @@ class App extends React.Component {
   }
 
   render() {
+    let result;
+    if (this.state.name === "") {
+      result = <HomePage />
+    } else {
+      result = <Drink name={this.state.name} ingredients={this.state.ingredients} instructions={this.state.instructions} image={this.state.image} />
+    }
     return (
       <div className="App">
         <header>
-          <NavBar searchFunc={this.search} randomDrinkFunc={this.getDrink} />
+          <NavBar app={this} searchFunc={this.search} randomDrinkFunc={this.getDrink} />
         </header>
         <main className="main-body">
-          <Drink name={this.state.name} ingredients={this.state.ingredients} instructions={this.state.instructions} image={this.state.image} />
+          {result}
         </main>
       </div>
     );
