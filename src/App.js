@@ -20,14 +20,17 @@ class App extends React.Component {
       instructions: "",
       image: "",
       searchError: false,
-      searchPhrase: ""
+      searchPhrase: "",
+      searchBoxValue: ""
     }
   }
 
-  search() {
-    let drinkSearch = document.getElementById("drinkSearch")
-    console.log("Searching...", drinkSearch.value)
-    this.getDrink(drinkSearch.value)
+  search(drinkSearch) {
+    if (!drinkSearch) {
+      drinkSearch = this.state.searchBoxValue
+    }
+    console.log("Searching...", drinkSearch)
+    this.getDrink(drinkSearch)
   }
 
   async getDrinkJson(drinkName) {

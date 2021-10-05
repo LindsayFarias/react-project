@@ -25,6 +25,7 @@ const NavBar = (props) => {
                             aria-label="Search"
                             id="drinkSearch"
                             ref={props.searchRef}
+                            onChange={element => props.app.setState({ searchBoxValue: element.target.value })}
                         />
                         <Button onClick={() => { props.searchFunc() }} variant="outline-success">Search</Button>
                     </Form>
