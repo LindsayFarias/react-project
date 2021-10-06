@@ -13,14 +13,14 @@ const NavBar = (props) => {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Button className="mx-1" onClick={() => { props.app.setState({ name: "", searchError: false }) }} variant="outline-success" >Home</Button>
+                        <Button className="mx-1" onClick={() => { props.app.setState({ drinks: [], searchError: false }) }} variant="outline-success" >Home</Button>
                         <Button className="mx-1" onClick={() => { props.randomDrinkFunc() }} variant="outline-success">Find Random Drink</Button>
 
                     </Nav>
                     <Form className="d-flex">
-                        <Button className="mx-1" onClick={() => { props.app.setState({ lang: "" }) }} variant="outline-success">EN</Button>
+                        {/* <Button className="mx-1" onClick={() => { props.app.setState({ lang: "" }) }} variant="outline-success">EN</Button>
                         <Button className="mx-1" onClick={() => { props.app.setState({ lang: "DE" }) }} variant="outline-warning">DE</Button>
-                        <Button className="mx-1" onClick={() => { props.app.setState({ lang: "IT" }) }} variant="outline-primary">IT</Button>
+                        <Button className="mx-1" onClick={() => { props.app.setState({ lang: "IT" }) }} variant="outline-primary">IT</Button> */}
                         <FormControl
                             type="search"
                             placeholder="Search by Drink Name"

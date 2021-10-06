@@ -4,6 +4,7 @@ import Drink from './Drink';
 import NavBar from './NavBar';
 import HomePage from './HomePage'
 import ErrorPage from './Error'
+import DrinkCarousel from './DrinkCarousel'
 //const url = "www.thecocktaildb.com/api/json/v1/1/"
 
 //change to "classical" aka use class
@@ -12,26 +13,28 @@ class App extends React.Component {
     super();
 
     this.search = this.search.bind(this);
-    this.getDrink = this.getDrink.bind(this);
+    this.getDrinks = this.getDrinks.bind(this);
 
     this.state = {
-      name: "",
-      ingredients: [],
-      instructions: "",
-      image: "",
+      // name: "",
+      // ingredients: [],
+      // instructions: "",
+      // image: "",
       searchError: false,
       searchPhrase: "",
       searchBoxValue: "",
-      lang: ""
+      lang: "",
+      drinks: []
     }
   }
 
   search(drinkSearch) {
+
     if (!drinkSearch) {
       drinkSearch = this.state.searchBoxValue
     }
     console.log("Searching...", drinkSearch)
-    this.getDrink(drinkSearch)
+    this.getDrinks(drinkSearch, true)
   }
 
   async getDrinkJson(drinkName) {
@@ -54,53 +57,67 @@ class App extends React.Component {
       this.setState({ searchError: false })
     }
 
-    return json.drinks[0];
+    return json.drinks;
   }
 
-  async getDrink(drinkName) {
+  async getDrinks(drinkName, clearState = false) {
 
-    let drink = await this.getDrinkJson(drinkName)
+    let drinks = await this.getDrinkJson(drinkName)
 
-    if (!drink)
+    if (!drinks)
       return
 
+    if (clearState === true) {
+      this.setState({ drinks: [] });
+    }
+
     //console.log("Drink", drink)
+    for (let i = 0; i < drinks.length; i++) {
 
-    let name = drink.strDrink
-    let ingredients = []
+      let drink = {}
+
+      drink.name = drinks[i].strDrink
+      drink.image = drinks[i].strDrinkThumb
+      drink.ingredients = []
+      drink.instructions = drinks[i].strInstructions
 
 
-    let instructions
+      // let instructions
 
-    switch (this.state.lang) {
-      case "": {
-        instructions = drink.strInstructions
-        break
+      // switch (this.state.lang) {
+      //   case "": {
+      //     instructions = drink.strInstructions
+      //     break
+      //   }
+      //   case "DE": {
+      //     instructions = drink.strInstructionsDE
+      //     break
+      //   }
+      //   case "IT": {
+      //     instructions = drink.strInstructionsIT
+      //     break
+      //   }
+      // }
+
+
+      for (let j = 1; j < 15; j++) {
+        let ingredientName = "strIngredient" + j
+        let measurementName = "strMeasure" + j
+
+        if (drinks[i][ingredientName]) {
+          drink.ingredients.push({ ingredient: drinks[i][ingredientName], measurement: drinks[i][measurementName] })
+        }
       }
-      case "DE": {
-        instructions = drink.strInstructionsDE
-        break
-      }
-      case "IT": {
-        instructions = drink.strInstructionsIT
-        break
-      }
+
+      //console.log(ingredients)s
+
+      let newDrinks = this.state.drinks.concat([drink]);
+      this.setState({ drinks: newDrinks })
+
+      console.log(this.state.drinks)
+
+      //this.setState({ name: name, ingredients: ingredients, instructions: instructions, image: image })
     }
-
-    let image = drink.strDrinkThumb
-
-    for (let i = 1; i < 15; i++) {
-      let ingredientName = "strIngredient" + i
-      let measurementName = "strMeasure" + i
-
-      if (drink[ingredientName]) {
-        ingredients.push({ ingredient: drink[ingredientName], measurement: drink[measurementName] })
-      }
-    }
-
-    //console.log(ingredients)
-
-    this.setState({ name: name, ingredients: ingredients, instructions: instructions, image: image })
   }
 
   render() {
@@ -108,15 +125,16 @@ class App extends React.Component {
     if (this.state.searchError) {
       // We have a search error, show the error page
       result = <ErrorPage searchPhrase={this.state.searchPhrase} searchFunc={this.search} />
-    } else if (this.state.name === "") {
+    } else if (this.state.drinks.length === 0) {
       result = <HomePage />
     } else {
-      result = <Drink name={this.state.name} ingredients={this.state.ingredients} instructions={this.state.instructions} image={this.state.image} lang={this.state.lang} />
+      //result = <Drink name={this.state.name} ingredients={this.state.ingredients} instructions={this.state.instructions} image={this.state.image} lang={this.state.lang} />
+      result = <DrinkCarousel drinks={this.state.drinks} />
     }
     return (
       <div className="App">
         <header>
-          <NavBar app={this} searchFunc={this.search} randomDrinkFunc={this.getDrink} />
+          <NavBar app={this} searchFunc={this.search} randomDrinkFunc={this.getDrinks} />
         </header>
         <main className="main-body">
           {result}
