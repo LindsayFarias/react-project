@@ -22,17 +22,12 @@ class App extends React.Component {
       // image: "",
       searchError: false,
       searchPhrase: "",
-      searchBoxValue: "",
       lang: "",
       drinks: []
     }
   }
 
   search(drinkSearch) {
-
-    if (!drinkSearch) {
-      drinkSearch = this.state.searchBoxValue
-    }
     console.log("Searching...", drinkSearch)
     this.getDrinks(drinkSearch, true)
   }

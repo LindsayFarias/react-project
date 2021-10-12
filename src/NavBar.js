@@ -17,7 +17,10 @@ const NavBar = (props) => {
                         <Button className="mx-1" onClick={() => { props.randomDrinkFunc() }} variant="outline-success">Find Random Drink</Button>
 
                     </Nav>
-                    <Form className="d-flex">
+                    <Form className="d-flex" onSubmit={(e) => {
+                        e.preventDefault()
+                        props.searchFunc(e.target[0].value)
+                    }}>
                         {/* <Button className="mx-1" onClick={() => { props.app.setState({ lang: "" }) }} variant="outline-success">EN</Button>
                         <Button className="mx-1" onClick={() => { props.app.setState({ lang: "DE" }) }} variant="outline-warning">DE</Button>
                         <Button className="mx-1" onClick={() => { props.app.setState({ lang: "IT" }) }} variant="outline-primary">IT</Button> */}
@@ -27,9 +30,8 @@ const NavBar = (props) => {
                             className="me-2"
                             aria-label="Search"
                             id="drinkSearch"
-                            onChange={element => props.app.setState({ searchBoxValue: element.target.value })}
                         />
-                        <Button onClick={() => { props.searchFunc() }} variant="outline-success">Search</Button>
+                        <Button type="submit" variant="outline-success">Search</Button>
                     </Form>
                 </Navbar.Collapse>
             </Container>
